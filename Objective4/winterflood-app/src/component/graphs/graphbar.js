@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
-import VWAPPerStock from '../data/VWAP_perStock.json';
 import {
     Chart as ChartJS,
     CategoryScale,

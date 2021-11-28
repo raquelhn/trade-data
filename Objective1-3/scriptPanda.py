@@ -1,17 +1,16 @@
 import pandas
 
 df = pandas.read_csv('market_trades.csv')
-
+#the df2 is the data frame with an additional price total column (price * quantity)
 df2=df.assign(priceTotal=df['price']* df['quantity'])
-#here it's the answer for VWAP Per unique stock / trade type combination
+#here it's the answer for VWAP Per unique stock / trade type combination, we are only using the required columns to calculate the VWAP
 df_res_1A =df2[['epic','trade type','quantity','priceTotal']]
 df_res_prev1A=df_res_1A.groupby(['epic','trade type']).sum()
 df_res_perStockperType=df_res_prev1A.assign(VWAP=df_res_prev1A['priceTotal']/ df_res_prev1A['quantity'])
 
-#print(df_res_prev1A)
 print(df_res_perStockperType)
 
-#here it's the answer for VWAP Per stock
+#here it's the answer for VWAP Per stock, we only group by the stock
 df_res_1B =df2[['epic','quantity','priceTotal']]
 df_res_prev1B=df_res_1B.groupby(['epic']).sum()
 df_res_perStock=df_res_prev1B.assign(VWAP=df_res_prev1B['priceTotal']/ df_res_prev1B['quantity'])
@@ -31,10 +30,10 @@ if save_Two=='yes':
 
 
 
-
-
 #these are files that I would be using for the objective 4 
 tradesTable=df.to_json('trades.json',orient="records")
 #print(tradesTable)
 df_res_perStock['VWAP'].to_json('VWAP_perStock.json',orient="index")  
 df_res_perStockperType['VWAP'].to_json('VWAP_perUniqueStock.json',orient="index")
+#these is general information about the VWAP result
+general_VWAP=df_res_perStock.groupby(['epic'])['VWAP'].describe()
