@@ -4,7 +4,7 @@ import data from './component/data/trades.json';
 import VWAPPerStock from './component/data/VWAP_perStock.json';
 import VWAPPerUniqStock from './component/data/VWAP_perUniqueStock.json';
 import BarChart from './component/graphs/graphbar'
-import LineChart from './component/graphs/bar'
+import LineChart from './component/graphs/graphline'
 import Datatable from './component/datatable';
 
 
