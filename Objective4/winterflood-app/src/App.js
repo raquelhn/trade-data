@@ -3,13 +3,11 @@ import './App.css';
 import data from './component/data/trades.json';
 import VWAPPerStock from './component/data/VWAP_perStock.json';
 import VWAPPerUniqStock from './component/data/VWAP_perUniqueStock.json';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-import DynamicChart from './component/graphs/bar'
+import BarChart from './component/graphs/graphbar'
+import LineChart from './component/graphs/bar'
 import Datatable from './component/datatable';
 
 
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 function App() {
@@ -17,10 +15,17 @@ function App() {
   console.log(data)
   const [allData,setAllData] = useState([]);
   const [q,setQ]=useState([]);
-  const [chart, setChart] = useState({});
+  const [chartData, setChartData]  = useState({});    
+
+
+  let content=Object.values(VWAPPerStock)
+  let labels=Object.keys(VWAPPerStock)
 
   
-    
+
+  let dataOne=[VWAPPerStock]
+
+  
   
   
   useEffect(() => {
@@ -39,14 +44,24 @@ function App() {
   
   return (
     <div className="App">
-      
-      <div style={{ margin: '0 auto', marginTop: '10%' }}>
+      <h1>VWAP Application</h1>
+      <div className="container-chart">
+        <div className="chart">
+          <LineChart/>
+        </div> 
+        <div className="chart">
+          <BarChart/>
+        </div> 
+      </div>
+      <div style={{ margin: '3% auto', marginTop: '10%' }}>
         <label>Search:</label>
         <input type="text" value={q} onChange={(e) =>setQ(e.target.value)} />
       </div>
+      <div className="container-table">
       <Datatable 
       data={search(allData)}
       />
+      </div>
      
     </div>
   );
